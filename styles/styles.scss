@@ -10,12 +10,15 @@ body{
 }
 h1{
     color: $secondaryColor;
+    text-align: center;
 }
 .calcContainer{
 
     &__numInfo{
         font-size: 3em;
         margin-bottom: 10px;
+        border: 2px $tertiaryColor solid;
+        text-align: right;
         
         &--input{
             background-color: $primaryColor;
@@ -37,5 +40,9 @@ h1{
         border: 1px $secondaryColor solid;
         font-size: 2.5em;
         border-radius: 25px 10px;
+    }
+    &__button:active{
+        background-color: $tertiaryColor;
+        color: $primaryColor;
     }
 }
