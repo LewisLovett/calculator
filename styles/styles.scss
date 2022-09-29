@@ -1,17 +1,29 @@
 @use 'colors' as *;
 
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 .calcContainer{
     &__input{
         background-color: $primaryColor;
         color: $secondaryColor;
+        font-size: 3em;
     }
     &__output{
         background-color: $secondaryColor;
         color: $primaryColor;
+        font-size: 3em;
     }
     &__button{
         background-color: $primaryColor;
         color: $tertiaryColor;
-        padding: 10px;
+        padding: 10px 20px;
+        margin: 5px;
+        border: 1px $secondaryColor solid;
+        font-size: 2.5em;
+        border-radius: 25px 10px;
     }
 }
