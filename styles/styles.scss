@@ -1,0 +1,17 @@
+@use 'colors' as *;
+
+.calcContainer{
+    &__input{
+        background-color: $primaryColor;
+        color: $secondaryColor;
+    }
+    &__output{
+        background-color: $secondaryColor;
+        color: $primaryColor;
+    }
+    &__button{
+        background-color: $primaryColor;
+        color: $tertiaryColor;
+        padding: 10px;
+    }
+}

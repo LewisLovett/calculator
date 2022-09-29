@@ -1,1 +1,13 @@
-/*# sourceMappingURL=styles.css.map */
+.calcContainer__input {
+  background-color: #252839;
+  color: #f2b632;
+}
+.calcContainer__output {
+  background-color: #f2b632;
+  color: #252839;
+}
+.calcContainer__button {
+  background-color: #252839;
+  color: #F5F5F5;
+  padding: 10px;
+}/*# sourceMappingURL=styles.css.map */
