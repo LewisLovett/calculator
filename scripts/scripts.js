@@ -4,14 +4,25 @@ let currentNumber;
 
 const handleNumberBtnClick = (event) => {
     currentNumber = event.target.value;
-    console.log(currentNumber);
+    console.log("num"+currentNumber);
+}
+
+const handleModifierBtnClick = (event) => {
+    modifier = event.target.value;
+    console.log("mod"+modifier);
 }
 
 
 const attachEvents = () => {
-    numberButtons = document.querySelectorAll(".numButton");
+    const numberButtons = document.querySelectorAll(".numButton");
     numberButtons.forEach(numButton => {
-        addEventListener("click", handleNumberBtnClick);
+        numButton.addEventListener("click", handleNumberBtnClick);
+    });
+
+    const modifierButtons = document.querySelectorAll(".modButton");
+    modifierButtons.forEach(modButton => {
+        modButton.addEventListener("click", handleModifierBtnClick);
     });
 }
+
 attachEvents();
