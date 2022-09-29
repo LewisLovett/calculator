@@ -5,18 +5,30 @@
     margin: 0;
     box-sizing: border-box;
 }
-
+body{
+    background-color: $primaryColor;
+}
+h1{
+    color: $secondaryColor;
+}
 .calcContainer{
-    &__input{
-        background-color: $primaryColor;
-        color: $secondaryColor;
+
+    &__numInfo{
         font-size: 3em;
+        margin-bottom: 10px;
+        
+        &--input{
+            background-color: $primaryColor;
+            color: $secondaryColor;
+            
+        }
+        &--output{
+            background-color: $secondaryColor;
+            color: $primaryColor;
+            
+        }
     }
-    &__output{
-        background-color: $secondaryColor;
-        color: $primaryColor;
-        font-size: 3em;
-    }
+
     &__button{
         background-color: $primaryColor;
         color: $tertiaryColor;

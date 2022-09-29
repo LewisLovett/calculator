@@ -4,15 +4,25 @@
   box-sizing: border-box;
 }
 
-.calcContainer__input {
+body {
+  background-color: #252839;
+}
+
+h1 {
+  color: #f2b632;
+}
+
+.calcContainer__numInfo {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+.calcContainer__numInfo--input {
   background-color: #252839;
   color: #f2b632;
-  font-size: 3em;
 }
-.calcContainer__output {
+.calcContainer__numInfo--output {
   background-color: #f2b632;
   color: #252839;
-  font-size: 3em;
 }
 .calcContainer__button {
   background-color: #252839;
