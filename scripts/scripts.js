@@ -21,10 +21,7 @@ const handleModifierBtnClick = (event) => {
 
 const handleEqualBtnClick = () =>{
     calculate();
-    document.querySelector(".calcContainer__numInfo--input").value = "";
-    currentTotalSum = 0;
-    modifier = "";
-    currentNumber = 0;
+    clearAllExptOutput();
 }
 
 const calculate = () => {
@@ -56,13 +53,18 @@ const displayInputs = (input) =>{
 const displayOutput = () =>{
     document.querySelector(".calcContainer__numInfo--output").value = currentTotalSum;
 }
-const handleClearBtnClick = () =>{
+
+const clearAllExptOutput = () =>{
     document.querySelector(".calcContainer__numInfo--input").value = "";
-    document.querySelector(".calcContainer__numInfo--output").value = 0;
     currentTotalSum = 0;
     modifier = "";
     currentNumber = 0;
     pastFirstNumber = false;
+}
+const handleClearBtnClick = () =>{
+    clearAllExptOutput();
+    document.querySelector(".calcContainer__numInfo--output").value = 0;
+    
 }
 
 
