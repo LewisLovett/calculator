@@ -15,6 +15,13 @@ const handleModifierBtnClick = (event) => {
 const displayInputs = (input) =>{
     document.querySelector(".calcContainer__numInfo--input").value += input;
 }
+const clearCalculator = () =>{
+    document.querySelector(".calcContainer__numInfo--input").value = "";
+    document.querySelector(".calcContainer__numInfo--output").value = 0;
+    currentTotalSum = 0;
+    modifier = "";
+    currentNumber = 0;
+}
 
 const attachEvents = () => {
     const numberButtons = document.querySelectorAll(".numButton");
@@ -26,6 +33,8 @@ const attachEvents = () => {
     modifierButtons.forEach(modButton => {
         modButton.addEventListener("click", handleModifierBtnClick);
     });
+
+    document.querySelector(".clearButton").addEventListener("click", clearCalculator);
 }
 
 attachEvents();
