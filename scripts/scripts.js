@@ -2,7 +2,7 @@ let currentTotalSum = 0;
 let modifier;
 let currentNumber = 0;
 let pastFirstNumber = false;
-
+let prevInputMultiplier = false;
 const handleNumberBtnClick = (event) => {
     if(currentNumber==0){
         currentNumber = Number(event.target.value);
@@ -10,13 +10,14 @@ const handleNumberBtnClick = (event) => {
         currentNumber = Number(`${currentNumber}${event.target.value}`);
     }
     displayInputs(event.target.value);
+    prevInputMultiplier = false;
 }
 
 const handleModifierBtnClick = (event) => {
     modifier = event.target.value;
-    console.log(modifier);
     displayInputs(modifier);
     calculate();
+    prevInputMultiplier = true;
 }
 
 const handleEqualBtnClick = () =>{
@@ -32,7 +33,12 @@ const calculate = () => {
             break;
         case "-":
             currentTotalSum -= currentNumber;
-            
+            break;
+        case "X":
+            currentTotalSum *= currentNumber;
+            break;
+        case "/":
+            currentTotalSum /= currentNumber;
             break;
         default:
             console.log("error");
