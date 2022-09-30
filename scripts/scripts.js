@@ -1,8 +1,13 @@
+let prevTotalSum = 0;
 let currentTotalSum = 0;
+let prevModifier;
 let modifier;
 let currentNumber = 0;
 let pastFirstNumber = false;
 let prevInputMultiplier = false;
+
+
+//Function for when the user clicks a number button. If statement is used for multiple digits
 const handleNumberBtnClick = (event) => {
     if(currentNumber==0){
         currentNumber = Number(event.target.value);
@@ -13,21 +18,35 @@ const handleNumberBtnClick = (event) => {
     prevInputMultiplier = false;
 }
 
+//Function for when the user click a modifier button. If statement checks if the previous input is a multiplier. 
+//If true then the new modifier replaces the previous modifier.
 const handleModifierBtnClick = (event) => {
+    prevModifier = modifier;
     modifier = event.target.value;
-    displayInputs(modifier);
+    if(!prevInputMultiplier){
+        displayInputs(modifier);
+    }else{
+        let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
+        document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-1);
+        displayInputs(modifier);
+    }
+    
     calculate();
     prevInputMultiplier = true;
 }
 
+//Function for when the user clicks equals button
 const handleEqualBtnClick = () =>{
+    prevModifier = modifier;
     calculate();
     clearAllExptOutput();
 }
 
+//Function that uses the modifier variable to calculate the new total sum. Checks if it the first input so it won't calculate
+//if there is only a single input.
 const calculate = () => {
     if (pastFirstNumber == true){
-    switch(modifier) {
+    switch(prevModifier) {
         case "+":
             currentTotalSum += currentNumber;
             break;
@@ -52,6 +71,7 @@ const calculate = () => {
     
 }
 
+
 const displayInputs = (input) =>{
     document.querySelector(".calcContainer__numInfo--input").value += input;
 }
@@ -60,6 +80,7 @@ const displayOutput = () =>{
     document.querySelector(".calcContainer__numInfo--output").value = currentTotalSum;
 }
 
+//Function that resets variables and the output. Used when = is pressed
 const clearAllExptOutput = () =>{
     document.querySelector(".calcContainer__numInfo--input").value = "";
     currentTotalSum = 0;
@@ -67,6 +88,8 @@ const clearAllExptOutput = () =>{
     currentNumber = 0;
     pastFirstNumber = false;
 }
+
+//Function that runs when the C button is clicked. Resets the calculator
 const handleClearBtnClick = () =>{
     clearAllExptOutput();
     document.querySelector(".calcContainer__numInfo--output").value = 0;
@@ -74,7 +97,7 @@ const handleClearBtnClick = () =>{
 }
 
 
-
+//Function to attach events to html
 const attachEvents = () => {
     const numberButtons = document.querySelectorAll(".numButton");
     numberButtons.forEach(numButton => {
