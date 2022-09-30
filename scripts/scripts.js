@@ -5,10 +5,16 @@ let currentNumber = 0;
 let pastFirstNumber = false; //Checks if the user has entered a second number -- used in calculate() function
 let prevInputModifier = false; // Checks if prev input was a modifier to prevent multiple modifiers being input
 let firstNumberInputted = false; //Checks if the first number has been inputted so the user cannot enter a modifer as the first input;
+let decimalSelected = false;
+let decimalNumberToAdd = "0.";
 
 
 //Function for when the user clicks a number button. If statement is used for multiple digits
 const handleNumberBtnClick = (event) => {
+    if (decimalSelected){
+        decimalNumberToAdd += event.target.value;
+        document.querySelector(".calcContainer__numInfo--input").value += event.target.value;
+    }else{
     firstNumberInputted = true;
     if(currentNumber==0){
         currentNumber = Number(event.target.value);
@@ -16,7 +22,7 @@ const handleNumberBtnClick = (event) => {
         currentNumber = Number(`${currentNumber}${event.target.value}`);
     }
     displayInputs(event.target.value);
-    prevInputModifier = false;
+    prevInputModifier = false;}
 }
 
 //Function for when the user click a modifier button. If statement checks if the previous input is a modifier. 
@@ -47,6 +53,10 @@ const handleEqualBtnClick = () =>{
 //calculate function is run exept for the very first time one has been clicked after a number has been inputted because
 // at that point only one number has been inputted so no sum can take place
 const calculate = () => {
+    if(decimalSelected){
+        currentNumber += Number(decimalNumberToAdd);
+        decimalSelected = false;
+    }
     if (pastFirstNumber == true){
     switch(prevModifier) {
         case "+":
@@ -89,6 +99,9 @@ const clearAllExptOutput = () =>{
     currentNumber = 0;
     pastFirstNumber = false;
     prevInputModifier = false;
+    firstNumberInputted = false;
+    decimalSelected = false;
+    decimalNumberToAdd = "0.";
 }
 
 //Function that runs when the C button is clicked. Resets the calculator
@@ -106,15 +119,12 @@ const handlePercentButton = () => {
     document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-lengthOfCurrentNumber);
     currentNumber /= 100;
     document.querySelector(".calcContainer__numInfo--input").value += currentNumber;
-    
-
 }
 
-
-// const handlePosiNegiButton = () => {
-//         currentNumber*= -1;
-
-// }
+const handleDecimalButton = () => {
+    decimalSelected = true;
+    document.querySelector(".calcContainer__numInfo--input").value += ".";
+}
 
 
 //Function to attach events to html
@@ -132,6 +142,7 @@ const attachEvents = () => {
     document.querySelector(".clearButton").addEventListener("click", handleClearBtnClick);
     document.querySelector(".equalButton").addEventListener("click", handleEqualBtnClick);
     document.querySelector(".percentButton").addEventListener("click", handlePercentButton);
+    document.querySelector(".decimalButton").addEventListener("click", handleDecimalButton);
 }
 
 attachEvents();
