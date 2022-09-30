@@ -4,14 +4,17 @@ let currentNumber;
 
 const handleNumberBtnClick = (event) => {
     currentNumber = event.target.value;
-    console.log("num"+currentNumber);
+    displayInputs(currentNumber);
 }
 
 const handleModifierBtnClick = (event) => {
     modifier = event.target.value;
-    console.log("mod"+modifier);
+    displayInputs(modifier);
 }
 
+const displayInputs = (input) =>{
+    document.querySelector(".calcContainer__numInfo--input").value += input;
+}
 
 const attachEvents = () => {
     const numberButtons = document.querySelectorAll(".numButton");
