@@ -1,49 +1,51 @@
-let prevTotalSum = 0;
 let currentTotalSum = 0;
 let prevModifier;
-let modifier;
+let newModifier;
 let currentNumber = 0;
-let pastFirstNumber = false;
-let prevInputMultiplier = false;
+let pastFirstNumber = false; //Checks if the user has entered a second number -- used in calculate() function
+let prevInputModifier = false; // Checks if prev input was a modifier to prevent multiple modifiers being input
+let firstNumberInputted = false; //Checks if the first number has been inputted so the user cannot enter a modifer as the first input;
 
 
 //Function for when the user clicks a number button. If statement is used for multiple digits
 const handleNumberBtnClick = (event) => {
+    firstNumberInputted = true;
     if(currentNumber==0){
         currentNumber = Number(event.target.value);
     }else{
         currentNumber = Number(`${currentNumber}${event.target.value}`);
     }
     displayInputs(event.target.value);
-    prevInputMultiplier = false;
+    prevInputModifier = false;
 }
 
-//Function for when the user click a modifier button. If statement checks if the previous input is a multiplier. 
+//Function for when the user click a modifier button. If statement checks if the previous input is a modifier. 
 //If true then the new modifier replaces the previous modifier.
 const handleModifierBtnClick = (event) => {
-    prevModifier = modifier;
-    modifier = event.target.value;
-    if(!prevInputMultiplier){
-        displayInputs(modifier);
-    }else{
-        let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
-        document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-1);
-        displayInputs(modifier);
+    if(firstNumberInputted){
+        if(!prevInputModifier){
+            prevModifier = newModifier;
+        }else{
+            let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
+            document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-1);
+        }
+        newModifier = event.target.value;
+        displayInputs(newModifier);
+        calculate();
+        prevInputModifier = true;
     }
-    
-    calculate();
-    prevInputMultiplier = true;
 }
 
 //Function for when the user clicks equals button
 const handleEqualBtnClick = () =>{
-    prevModifier = modifier;
+    prevModifier = newModifier;
     calculate();
     clearAllExptOutput();
 }
 
-//Function that uses the modifier variable to calculate the new total sum. Checks if it the first input so it won't calculate
-//if there is only a single input.
+//Function that uses the modifier variable to calculate the new total sum. When ever a modifier button is clicked the 
+//calculate function is run exept for the very first time one has been clicked after a number has been inputted because
+// at that point only one number has been inputted so no sum can take place
 const calculate = () => {
     if (pastFirstNumber == true){
     switch(prevModifier) {
@@ -59,8 +61,6 @@ const calculate = () => {
         case "/":
             currentTotalSum /= currentNumber;
             break;
-        default:
-            console.log("error");
     }
     }else{
         currentTotalSum = currentNumber;
@@ -84,9 +84,11 @@ const displayOutput = () =>{
 const clearAllExptOutput = () =>{
     document.querySelector(".calcContainer__numInfo--input").value = "";
     currentTotalSum = 0;
-    modifier = "";
+    prevModifier = "";
+    newModifier = "";
     currentNumber = 0;
     pastFirstNumber = false;
+    prevInputModifier = false;
 }
 
 //Function that runs when the C button is clicked. Resets the calculator
@@ -95,6 +97,24 @@ const handleClearBtnClick = () =>{
     document.querySelector(".calcContainer__numInfo--output").value = 0;
     
 }
+
+//Handle percentage button.Removes current number from input html. Takes the current number and divides it by 100
+// and displays the percentage in the input html.
+const handlePercentButton = () => {
+    let lengthOfCurrentNumber = String(currentNumber).length;
+    let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
+    document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-lengthOfCurrentNumber);
+    currentNumber /= 100;
+    document.querySelector(".calcContainer__numInfo--input").value += currentNumber;
+    
+
+}
+
+
+// const handlePosiNegiButton = () => {
+//         currentNumber*= -1;
+
+// }
 
 
 //Function to attach events to html
@@ -111,6 +131,7 @@ const attachEvents = () => {
 
     document.querySelector(".clearButton").addEventListener("click", handleClearBtnClick);
     document.querySelector(".equalButton").addEventListener("click", handleEqualBtnClick);
+    document.querySelector(".percentButton").addEventListener("click", handlePercentButton);
 }
 
 attachEvents();
