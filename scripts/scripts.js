@@ -1,6 +1,6 @@
-let currentTotalSum;
+let currentTotalSum = 0;
 let modifier;
-let currentNumber;
+let currentNumber = 0;
 
 const handleNumberBtnClick = (event) => {
     if(currentNumber==0){
@@ -8,20 +8,31 @@ const handleNumberBtnClick = (event) => {
     }else{
         currentNumber = Number(`${currentNumber}${event.target.value}`);
     }
-    
-    console.log(currentNumber);
     displayInputs(event.target.value);
 }
 
 const handleModifierBtnClick = (event) => {
     modifier = event.target.value;
     displayInputs(modifier);
+    switch(modifier) {
+        case "+":
+            currentTotalSum += currentNumber;
+            displayOutput();
+            currentNumber = 0;
+            break;
+        
+        default:
+            console.log("error");
+    }
 }
 
 const displayInputs = (input) =>{
     document.querySelector(".calcContainer__numInfo--input").value += input;
 }
 
+const displayOutput = () =>{
+    document.querySelector(".calcContainer__numInfo--output").value = currentTotalSum;
+}
 const clearCalculator = () =>{
     document.querySelector(".calcContainer__numInfo--input").value = "";
     document.querySelector(".calcContainer__numInfo--output").value = 0;
