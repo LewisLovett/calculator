@@ -1,6 +1,6 @@
 let currentTotalSum = 0;
-let prevModifier;
-let newModifier;
+let prevModifier;//Stores modifer used to calculate sum when user presses new modifier button
+let newModifier;//Stores modifer used to calculate sum when user presses = button
 let currentNumber = 0;
 let pastFirstNumber = false; //Checks if the user has entered a second number -- used in calculate() function
 let prevInputModifier = false; // Checks if prev input was a modifier to prevent multiple modifiers being input
@@ -10,6 +10,7 @@ let decimalNumberToAdd = "0.";
 let sinSelected = false;
 let tanSelected = false;
 let cosSelected = false;
+let numberInputted = false;
 
 
 //Function for when the user clicks a number button. If statement is used for multiple digits
@@ -21,11 +22,12 @@ const handleNumberBtnClick = (event) => {
         firstNumberInputted = true;
         if(currentNumber==0){
             currentNumber = Number(event.target.value);
-    }else{
-        currentNumber = Number(`${currentNumber}${event.target.value}`);
-    }
-    displayInputs(event.target.value);
-    prevInputModifier = false;
+        }else{
+            currentNumber = Number(`${currentNumber}${event.target.value}`);
+        }
+        displayInputs(event.target.value);
+        prevInputModifier = false;
+        numberInputted = true;
     }
 }
 
@@ -72,7 +74,7 @@ const calculate = () => {
     if(sinSelected||cosSelected||tanSelected){
         calculateSinCosTan();
     }
-    else if (pastFirstNumber == true){
+    if (pastFirstNumber == true){
         switch(prevModifier) {
             case "+":
                 currentTotalSum += currentNumber;
@@ -124,6 +126,7 @@ const clearAllExptOutput = () =>{
     sinSelected = false;
     tanSelected = false;
     cosSelected = false;
+    numberInputted = false;
 }
 
 //Function that runs when the C button is clicked. Resets the calculator
@@ -167,6 +170,7 @@ const handleDecimalButton = () => {
 }
 
 const handleSinBtnClick = () => {
+    sinCosTanPrevNumberCheck();
     if(cosSelected || tanSelected){
         cosSelected = false;
         tanSelected = false;
@@ -178,6 +182,7 @@ const handleSinBtnClick = () => {
 
 }
 const handleCosBtnClick = () => {
+    sinCosTanPrevNumberCheck();
     if(sinSelected || tanSelected){
         sinSelected = false;
         tanSelected = false;
@@ -189,6 +194,8 @@ const handleCosBtnClick = () => {
     
 }
 const handleTanBtnClick = () => {
+    console.log("test");
+    sinCosTanPrevNumberCheck();
     if(cosSelected || sinSelected){
         cosSelected = false;
         sinSelected = false;
@@ -199,16 +206,26 @@ const handleTanBtnClick = () => {
     document.querySelector(".calcContainer__numInfo--input").value += "tan(";
     
 }
+const sinCosTanPrevNumberCheck = () =>{
+    if (!prevInputModifier && numberInputted){
+        prevModifier = newModifier;
+        newModifier = "x";
+        displayInputs(newModifier);
+        calculate();
+        prevInputModifier = true;
+        console.log(currentNumber);
+    }
+}
 
 const calculateSinCosTan = () =>{
     if (sinSelected){
-        currentTotalSum += Math.sin(currentNumber);
+        currentNumber = Math.sin(currentNumber);
     }
     if (cosSelected){
-        currentTotalSum += Math.cos(currentNumber);
+        currentNumber = Math.cos(currentNumber);
     }
     if (tanSelected){
-        currentTotalSum += Math.tan(currentNumber);
+        currentNumber = Math.tan(currentNumber);
     }
 }
 
