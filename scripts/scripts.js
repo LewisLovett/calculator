@@ -111,6 +111,16 @@ const handleClearBtnClick = () =>{
     
 }
 
+//Handle +/- button. Takes the current number, removes it from the input html, multiples it by -1 to turn to either positive or negative
+//then adds the new value to the input html.
+const handlePosNegBtnClick = () =>{
+    let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
+    let lengthOfCurrentNum = currentNumber.toString().length;
+    document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-lengthOfCurrentNum );
+    currentNumber *= -1;
+    document.querySelector(".calcContainer__numInfo--input").value += currentNumber;
+}
+
 //Handle percentage button.Removes current number from input html. Takes the current number and divides it by 100
 // and displays the percentage in the input html.
 const handlePercentButton = () => {
@@ -143,6 +153,7 @@ const attachEvents = () => {
     document.querySelector(".equalButton").addEventListener("click", handleEqualBtnClick);
     document.querySelector(".percentButton").addEventListener("click", handlePercentButton);
     document.querySelector(".decimalButton").addEventListener("click", handleDecimalButton);
+    document.querySelector(".posNegButton").addEventListener("click", handlePosNegBtnClick);
 }
 
 attachEvents();
