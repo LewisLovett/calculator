@@ -73,7 +73,7 @@ const calculate = () => {
         case "-":
             currentTotalSum -= currentNumber;
             break;
-        case "X":
+        case "x":
             currentTotalSum *= currentNumber;
             break;
         case "/":
@@ -147,8 +147,10 @@ const handlePercentButton = () => {
 //Handle decimal button. Changes a boolan variable to true so now when the user inputs a number it will be considered a decimal addition
 //to the current number. It also updates the input html so the user has visual confirmation that they are entering a decimal number
 const handleDecimalButton = () => {
-    decimalSelected = true;
-    document.querySelector(".calcContainer__numInfo--input").value += ".";
+    if(decimalSelected!=true){
+        decimalSelected = true;
+        document.querySelector(".calcContainer__numInfo--input").value += ".";
+    }
 }
 
 
