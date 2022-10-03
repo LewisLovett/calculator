@@ -7,6 +7,9 @@ let prevInputModifier = false; // Checks if prev input was a modifier to prevent
 let firstNumberInputted = false; //Checks if the first number has been inputted so the user cannot enter a modifer as the first input;
 let decimalSelected = false; //Checks if the user has selected the decimal button
 let decimalNumberToAdd = "0.";
+let sinSelected = false;
+let tanSelected = false;
+let cosSelected = false;
 
 
 //Function for when the user clicks a number button. If statement is used for multiple digits
@@ -15,14 +18,15 @@ const handleNumberBtnClick = (event) => {
         decimalNumberToAdd += event.target.value;
         document.querySelector(".calcContainer__numInfo--input").value += event.target.value;
     }else{
-    firstNumberInputted = true;
-    if(currentNumber==0){
-        currentNumber = Number(event.target.value);
+        firstNumberInputted = true;
+        if(currentNumber==0){
+            currentNumber = Number(event.target.value);
     }else{
         currentNumber = Number(`${currentNumber}${event.target.value}`);
     }
     displayInputs(event.target.value);
-    prevInputModifier = false;}
+    prevInputModifier = false;
+    }
 }
 
 //Function to handle pi button click. Same as number button exept it set currentNumber to pi
@@ -36,7 +40,7 @@ const handlePiBtnClick = (event) => {
 //Function for when the user click a modifier button. If statement checks if the previous input is a modifier. 
 //If true then the new modifier replaces the previous modifier.
 const handleModifierBtnClick = (event) => {
-    if(firstNumberInputted){
+    if(firstNumberInputted && !sinSelected && !cosSelected && !tanSelected ){
         if(!prevInputModifier){
             prevModifier = newModifier;
         }else{
@@ -65,21 +69,24 @@ const calculate = () => {
         currentNumber += Number(decimalNumberToAdd);
         decimalSelected = false;
     }
-    if (pastFirstNumber == true){
-    switch(prevModifier) {
-        case "+":
-            currentTotalSum += currentNumber;
-            break;
-        case "-":
-            currentTotalSum -= currentNumber;
-            break;
-        case "x":
-            currentTotalSum *= currentNumber;
-            break;
-        case "/":
-            currentTotalSum /= currentNumber;
-            break;
+    if(sinSelected||cosSelected||tanSelected){
+        calculateSinCosTan();
     }
+    else if (pastFirstNumber == true){
+        switch(prevModifier) {
+            case "+":
+                currentTotalSum += currentNumber;
+                break;
+            case "-":
+                currentTotalSum -= currentNumber;
+                break;
+            case "x":
+                currentTotalSum *= currentNumber;
+                break;
+            case "/":
+                currentTotalSum /= currentNumber;
+                break;
+        }
     }else{
         currentTotalSum = currentNumber;
         pastFirstNumber = true;
@@ -87,6 +94,9 @@ const calculate = () => {
     displayOutput();
     currentNumber = 0;
     decimalNumberToAdd = "0."
+    sinSelected = false;
+    tanSelected = false;
+    cosSelected = false;
     
 }
 
@@ -111,6 +121,9 @@ const clearAllExptOutput = () =>{
     firstNumberInputted = false;
     decimalSelected = false;
     decimalNumberToAdd = "0.";
+    sinSelected = false;
+    tanSelected = false;
+    cosSelected = false;
 }
 
 //Function that runs when the C button is clicked. Resets the calculator
@@ -153,6 +166,51 @@ const handleDecimalButton = () => {
     }
 }
 
+const handleSinBtnClick = () => {
+    if(cosSelected || tanSelected){
+        cosSelected = false;
+        tanSelected = false;
+        let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
+        document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-4);
+    }
+    sinSelected = true;
+    document.querySelector(".calcContainer__numInfo--input").value += "sin(";
+
+}
+const handleCosBtnClick = () => {
+    if(sinSelected || tanSelected){
+        sinSelected = false;
+        tanSelected = false;
+        let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
+        document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-4);
+    }
+    cosSelected = true;
+    document.querySelector(".calcContainer__numInfo--input").value += "cos(";
+    
+}
+const handleTanBtnClick = () => {
+    if(cosSelected || sinSelected){
+        cosSelected = false;
+        sinSelected = false;
+        let htmlInput = document.querySelector(".calcContainer__numInfo--input").value;
+        document.querySelector(".calcContainer__numInfo--input").value = htmlInput.slice(0,-4);
+    }
+    tanSelected = true;
+    document.querySelector(".calcContainer__numInfo--input").value += "tan(";
+    
+}
+
+const calculateSinCosTan = () =>{
+    if (sinSelected){
+        currentTotalSum += Math.sin(currentNumber);
+    }
+    if (cosSelected){
+        currentTotalSum += Math.cos(currentNumber);
+    }
+    if (tanSelected){
+        currentTotalSum += Math.tan(currentNumber);
+    }
+}
 
 //Function to attach events to html
 const attachEvents = () => {
@@ -172,6 +230,9 @@ const attachEvents = () => {
     document.querySelector(".decimalButton").addEventListener("click", handleDecimalButton);
     document.querySelector(".posNegButton").addEventListener("click", handlePosNegBtnClick);
     document.querySelector(".piButton").addEventListener("click", handlePiBtnClick);
+    document.querySelector(".sinButton").addEventListener("click", handleSinBtnClick);
+    document.querySelector(".cosButton").addEventListener("click", handleCosBtnClick);
+    document.querySelector(".tanButton").addEventListener("click", handleTanBtnClick);
 }
 
 attachEvents();
