@@ -20,7 +20,7 @@ h1{
 .calcContainer{
     background-color: $primaryColor;
     border: 3px $secondaryColor solid;
-    width: 560px;
+    max-width: 570px;
     margin: 10px;
     padding: 30px 10px;
     &__numInfo{
@@ -32,13 +32,19 @@ h1{
         &--input{
             background-color: $primaryColor;
             color: $secondaryColor;
+            width: 100%;
             
         }
         &--output{
             background-color: $secondaryColor;
             color: $primaryColor;
+            width: 100%;
             
         }
+    }
+
+    &__buttonContainer{
+        text-align: center;
     }
 
     &__button{
@@ -48,7 +54,12 @@ h1{
         margin: 5px;
         border: 1px $secondaryColor solid;
         font-size: 2.5em;
+        width: 100px;
         border-radius: 25px 10px;
+        
+        &--largerButton{
+            width: 200px;
+        }
     }
     &__button:active{
         background-color: $tertiaryColor;

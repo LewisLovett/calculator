@@ -21,7 +21,7 @@ h1 {
 .calcContainer {
   background-color: #020402;
   border: 3px #A9C5A0 solid;
-  width: 560px;
+  max-width: 570px;
   margin: 10px;
   padding: 30px 10px;
 }
@@ -34,10 +34,15 @@ h1 {
 .calcContainer__numInfo--input {
   background-color: #020402;
   color: #A9C5A0;
+  width: 100%;
 }
 .calcContainer__numInfo--output {
   background-color: #A9C5A0;
   color: #020402;
+  width: 100%;
+}
+.calcContainer__buttonContainer {
+  text-align: center;
 }
 .calcContainer__button {
   background-color: #020402;
@@ -46,7 +51,11 @@ h1 {
   margin: 5px;
   border: 1px #A9C5A0 solid;
   font-size: 2.5em;
+  width: 100px;
   border-radius: 25px 10px;
+}
+.calcContainer__button--largerButton {
+  width: 200px;
 }
 .calcContainer__button:active {
   background-color: #C5EFCB;

@@ -122,7 +122,7 @@ const handlePosNegBtnClick = () =>{
     document.querySelector(".calcContainer__numInfo--input").value += currentNumber;
 }
 
-//Handle percentage button.Removes current number from input html. Takes the current number and divides it by 100
+//Handle percentage button. Removes current number from input html. Takes the current number and divides it by 100
 // and displays the percentage in the input html.
 const handlePercentButton = () => {
     let lengthOfCurrentNumber = String(currentNumber).length;
@@ -132,6 +132,8 @@ const handlePercentButton = () => {
     document.querySelector(".calcContainer__numInfo--input").value += currentNumber;
 }
 
+//Handle decimal button. Changes a boolan variable to true so now when the user inputs a number it will be considered a decimal addition
+//to the current number. It also updates the input html so the user has visual confirmation that they are entering a decimal number
 const handleDecimalButton = () => {
     decimalSelected = true;
     document.querySelector(".calcContainer__numInfo--input").value += ".";
