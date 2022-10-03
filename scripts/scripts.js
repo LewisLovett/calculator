@@ -78,6 +78,7 @@ const calculate = () => {
     }
     displayOutput();
     currentNumber = 0;
+    decimalNumberToAdd = "0."
     
 }
 

@@ -6,14 +6,23 @@
     box-sizing: border-box;
 }
 body{
-    background-color: $primaryColor;
+    background-color: $quaternaryColor;
+    display: flex;
+    justify-content: center;
 }
 h1{
     color: $secondaryColor;
     text-align: center;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 2.5em;
+    padding-bottom: 5px;
 }
 .calcContainer{
-
+    background-color: $primaryColor;
+    border: 3px $secondaryColor solid;
+    width: 560px;
+    margin: 10px;
+    padding: 30px 10px;
     &__numInfo{
         font-size: 3em;
         margin-bottom: 10px;
